@@ -175,7 +175,7 @@ export default function Page() {
               </div>
 
               {/* Budget Breakdown */}
-              <div className="bg-slate-100 rounded-xl p-4 md:w-1/2">
+              <div className="bg-white dark:bg-slate-100 rounded-xl p-4 md:w-1/2">
                 <p className="font-bold text-black mb-2 text-xl">
                   Budget Breakdown
                 </p>

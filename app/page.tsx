@@ -40,16 +40,9 @@ export default function Home() {
     <>
       {splashed !== "true" ? <Splash /> : ""}
       <main className="min-h-screen">
-        <div
-          className="min-h-screen bg-slate-900 text-white
-        overflow-x-hidden"
-        >
+        <div className="min-h-screen overflow-x-hidden">
           {/* Hero Section */}
           <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-emerald-900 via-slate-900 to-green-900">
-              <div className="absolute inset-0 opacity-20 bg-gradient-to-r from-emerald-800/30 to-green-800/30" />
-            </div>
-
             <div className="absolute inset-0 overflow-hidden">
               {[...Array(8)].map((_, i) => (
                 <div
@@ -71,8 +64,8 @@ export default function Home() {
             </div>
 
             <div className="relative z-10 text-center max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-              <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-                <span className="bg-gradient-to-r from-white via-emerald-200 to-green-200 bg-clip-text text-transparent">
+              <h1 className="text-5xl md:text-7xl font-bold mb-6 text-balance leading-tight">
+                <span className="text-emerald-500 dark:bg-gradient-to-r from-white via-emerald-200 to-green-200 dark:bg-clip-text dark:text-transparent">
                   Travel by Vibe,
                 </span>
                 <br />
@@ -81,7 +74,7 @@ export default function Home() {
                 </span>
               </h1>
 
-              <p className="text-xl md:text-2xl text-slate-300 mb-8 max-w-2xl mx-auto leading-relaxed">
+              <p className="text-xl md:text-2xl text-neutral-900 dark:text-neutral-300 mb-8 max-w-2xl mx-auto leading-relaxed">
                 AI-powered mood-based travel curator that generates personalized
                 destinations, itineraries, and seamless bookings based on how
                 you want to feel.
@@ -118,7 +111,10 @@ export default function Home() {
           </section>
 
           {/* How It Works */}
-          <section id="how-it-works" className="py-20 bg-slate-800/50">
+          <section
+            id="how-it-works"
+            className="py-20 bg-neutral-900 dark:bg-slate-800/50"
+          >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-16">
                 <h2 className="text-4xl md:text-5xl font-bold mb-4">
@@ -171,7 +167,7 @@ export default function Home() {
                     Choose Your Vibe
                   </span>
                 </h2>
-                <p className="text-xl text-slate-400 max-w-2xl mx-auto">
+                <p className="text-xl dark:text-neutral-300 max-w-2xl mx-auto">
                   Every mood deserves the perfect destination
                 </p>
               </div>
@@ -179,26 +175,24 @@ export default function Home() {
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {moods.map((mood, index) => (
                   <Link
-                    href={`/dashboard/moods/${mood.id}`}
+                    href={`/dashboard/moods/${mood.slug}`}
                     key={index}
                     prefetch={false}
                   >
                     <Card
-                      key={mood.id}
-                      className="group cursor-pointer border-slate-700 bg-slate-800/30 backdrop-blur-sm hover:bg-slate-800/50 transition-colors duration-300"
+                      key={mood.slug}
+                      className="group cursor-pointer bg-neutral-900 hover:bg-neutral-800 dark:border-slate-700 dark:bg-slate-800/30 backdrop-blur-sm dark:hover:bg-slate-800/50 transition-colors duration-300"
                     >
                       <CardContent className="p-6">
                         <div
-                          className={`w-full h-32 ${mood.color} rounded-lg mb-4 flex items-center justify-center text-4xl`}
+                          className={`w-full h-32 ${mood.color} rounded-lg mb-4 flex items-center justify-center text-7xl`}
                         >
-                          {mood.emoji}
+                          {mood.icon}
                         </div>
-                        <h3 className="text-lg font-semibold mb-2 text-white">
-                          {mood.name}
+                        <h3 className="text-xl font-semibold mb-2 text-white">
+                          {mood.title}
                         </h3>
-                        <p className="text-slate-400 text-sm">
-                          {mood.description}
-                        </p>
+                        <p className="text-slate-400">{mood.description}</p>
                       </CardContent>
                     </Card>
                   </Link>
@@ -208,7 +202,7 @@ export default function Home() {
           </section>
 
           {/* AI Curator Demo */}
-          <section className="py-20 bg-slate-800/50">
+          <section className="py-20 bg-neutral-900 dark:bg-slate-800/50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="grid lg:grid-cols-2 gap-12 items-center">
                 <div>
@@ -293,8 +287,13 @@ export default function Home() {
                       </div>
                     </div>
 
-                    <Button className="w-full bg-gradient-to-r from-emerald-600 to-green-700 hover:from-emerald-700 hover:to-green-800 text-white border-0">
-                      Book This Vibe
+                    <Button
+                      asChild
+                      className="w-full bg-gradient-to-r from-emerald-600 to-green-700 hover:from-emerald-700 hover:to-green-800 text-white border-0 text-lg"
+                    >
+                      <Link href={"/dashboard/moods/relax-and-recharge"}>
+                        Book This Vibe
+                      </Link>
                     </Button>
                   </CardContent>
                 </Card>
@@ -311,7 +310,7 @@ export default function Home() {
                     Everything You Need
                   </span>
                 </h2>
-                <p className="text-xl text-slate-400 max-w-2xl mx-auto">
+                <p className="text-xl dark:text-neutral-300 max-w-2xl mx-auto">
                   From discovery to booking, we&apos;ve got your entire journey
                   covered
                 </p>
@@ -342,16 +341,16 @@ export default function Home() {
                 ].map((feature, index) => (
                   <Card
                     key={index}
-                    className="bg-slate-800/30 border-slate-700 backdrop-blur-sm hover:bg-slate-800/50 transition-colors duration-300"
+                    className="bg-neutral-900 dark:bg-slate-800/30 dark:border-slate-700 backdrop-blur-sm dark:hover:bg-slate-800/50 transition-colors duration-300"
                   >
                     <CardContent className="p-6 text-center">
                       <div className="w-12 h-12 mx-auto mb-4 bg-gradient-to-br from-slate-700 to-slate-800 rounded-lg flex items-center justify-center">
                         <feature.icon className="w-6 h-6 text-emerald-500" />
                       </div>
-                      <h3 className="font-semibold mb-2 text-white">
+                      <h3 className="font-semibold mb-2 text-xl text-white">
                         {feature.title}
                       </h3>
-                      <p className="text-sm text-slate-400">{feature.desc}</p>
+                      <p className="text-slate-400">{feature.desc}</p>
                     </CardContent>
                   </Card>
                 ))}
@@ -360,50 +359,64 @@ export default function Home() {
           </section>
 
           {/* Final CTA */}
-          <section className="py-20 bg-gradient-to-r from-emerald-700 via-green-700 to-emerald-800">
+          <section className="py-20 bg-neutral-900 dark:bg-slate-800/50">
             <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-emerald-500 to-green-600 bg-clip-text text-transparent">
                 Ready to Travel by Vibe?
               </h2>
-              <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+              <p className="text-xl text-slate-400 mb-8 max-w-2xl mx-auto">
                 Join thousands of travelers who&apos;ve discovered their perfect
                 destinations through mood-based curation.
               </p>
               <Button
+                asChild
                 size="lg"
-                className="bg-white text-emerald-800 hover:bg-slate-100 px-8 py-4 text-lg font-semibold shadow-lg transition-colors duration-300"
+                className=" bg-gradient-to-r from-emerald-600 to-green-700 hover:from-emerald-700 hover:to-green-800 text-white border-0 px-8 py-4 text-lg font-semibold shadow-lg transition-colors duration-300"
               >
-                Start Your Vibe Journey
-                <ArrowRight className="ml-2 w-5 h-5" />
+                <Link href={"/dashboard"}>
+                  Start Your Vibe Journey
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
               </Button>
             </div>
           </section>
 
           {/* Footer */}
-          <footer className="bg-slate-900 border-t border-slate-800 py-12">
+          <footer className="border-t border-slate-800 py-12">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="flex flex-col md:flex-row justify-between items-center">
-                <div className="flex items-center space-x-2 mb-4 md:mb-0">
-                  <div className="w-8 h-8 bg-gradient-to-br from-emerald-600 to-green-700 rounded-lg flex items-center justify-center">
-                    <MapPin className="w-5 h-5 text-white" />
+                <Link href={"/"}>
+                  <div className="flex items-center space-x-2 mb-4 md:mb-0">
+                    <div className="w-8 h-8 bg-gradient-to-br from-emerald-600 to-green-700 rounded-lg flex items-center justify-center">
+                      <MapPin className="w-5 h-5 text-white" />
+                    </div>
+                    <span className="text-xl font-bold bg-gradient-to-r from-emerald-500 to-green-600 bg-clip-text text-transparent">
+                      GoByVibe
+                    </span>
                   </div>
-                  <span className="text-xl font-bold bg-gradient-to-r from-emerald-500 to-green-600 bg-clip-text text-transparent">
-                    GoByVibe
-                  </span>
-                </div>
-                <div className="flex space-x-6 text-slate-400">
-                  <a href="#" className="hover:text-white transition-colors">
+                </Link>
+                <div className="flex space-x-6 dark:text-neutral-300">
+                  <a
+                    href="#"
+                    className="hover:text-emerald-600 dark:hover:text-emerald-300 transition-colors"
+                  >
                     Privacy
                   </a>
-                  <a href="#" className="hover:text-white transition-colors">
+                  <a
+                    href="#"
+                    className="hover:text-emerald-600 dark:hover:text-emerald-300 transition-colors"
+                  >
                     Terms
                   </a>
-                  <a href="#" className="hover:text-white transition-colors">
+                  <a
+                    href="#"
+                    className="hover:text-emerald-600 dark:hover:text-emerald-300 transition-colors"
+                  >
                     Support
                   </a>
                 </div>
               </div>
-              <div className="mt-8 pt-8 border-t border-slate-800 text-center text-slate-500">
+              <div className="mt-8 pt-8 border-t border-neutral-800 text-center dark:text-neutral-300">
                 <p>
                   &copy; 2025 GoByVibe. All rights reserved. Travel by vibe, not
                   by guidebook.

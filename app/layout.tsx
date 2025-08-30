@@ -5,6 +5,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/Custom/Nav/NavBar";
 import { Toaster } from "sonner";
+import { ViewTransitions } from "next-view-transitions";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -40,18 +41,20 @@ export default function RootLayout({
     >
       <html lang="en" suppressHydrationWarning>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-neutral-100 dark:bg-neutral-900`}
         >
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <NavBar />
-            <main>{children}</main>
-            <Toaster position="top-center" />
-          </ThemeProvider>
+          <ViewTransitions>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <NavBar />
+              <main>{children}</main>
+              <Toaster position="top-center" />
+            </ThemeProvider>
+          </ViewTransitions>
         </body>
       </html>
     </ClerkProvider>
