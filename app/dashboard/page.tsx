@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "next-view-transitions";
 import { useClerkSupabaseClient } from "@/lib/clerkSupabaseClient";
 import { toast } from "sonner";
+import { Icons } from "@/components/icons";
 
 interface Mood {
   id: string;
@@ -91,7 +92,10 @@ const Dashboard = () => {
         </p>
 
         {moods.length === 0 ? (
-          <p className="text-lg">Loading moods...</p>
+          <p className="text-lg flex items-center justify-center gap-2">
+            <Icons.spinner className="animate-spin" />
+            Loading moods
+          </p>
         ) : (
           <div className="grid grid-cols-2 gap-3 max-w-4xl md:flex md:flex-wrap justify-center px-4">
             {moods.map((mood) => (
