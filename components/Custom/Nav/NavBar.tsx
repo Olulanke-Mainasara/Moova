@@ -3,15 +3,8 @@
 import { MapPin, Menu, X } from "lucide-react";
 import { Link } from "next-view-transitions";
 import React, { useState } from "react";
-import {
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-  SignUpButton,
-} from "@clerk/nextjs";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { ThemeSwitcher } from "../theme-switcher";
-import { Button } from "../../ui/button";
 import { AnimatePresence } from "framer-motion";
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
@@ -21,8 +14,8 @@ const NavBar = () => {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed top-0 w-full z-40 dark:bg-neutral-900/80 backdrop-blur-md">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav className="fixed top-0 w-full z-40 bg-neutral-100/80 dark:bg-neutral-900/80 backdrop-blur-md">
+      <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           <Link href={"/"}>
             <div className="flex items-center space-x-2">
@@ -42,20 +35,20 @@ const NavBar = () => {
             >
               How It Works
             </Link>
-            <Link
-              href="/#moods"
-              className="hover:text-emerald-600 dark:text-neutral-300 dark:hover:text-emerald-300 transition-colors"
-            >
-              Moods
-            </Link>
-            <Link
-              href="/#features"
-              className="hover:text-emerald-600 dark:text-neutral-300 dark:hover:text-emerald-300 transition-colors"
-            >
-              Features
-            </Link>
 
             <SignedOut>
+              <Link
+                href="/#moods"
+                className="hover:text-emerald-600 dark:text-neutral-300 dark:hover:text-emerald-300 transition-colors"
+              >
+                Moods
+              </Link>
+              <Link
+                href="/#features"
+                className="hover:text-emerald-600 dark:text-neutral-300 dark:hover:text-emerald-300 transition-colors"
+              >
+                Features
+              </Link>
               <SignInButton>
                 <button className="cursor-pointer border py-1.5 px-4 rounded-lg bg-neutral-600 text-white hover:bg-neutral-700 transition-colors">
                   Sign in
@@ -63,6 +56,18 @@ const NavBar = () => {
               </SignInButton>
             </SignedOut>
             <SignedIn>
+              <Link
+                href="/dashboard/saved-trips"
+                className="hover:text-emerald-600 dark:text-neutral-300 dark:hover:text-emerald-300 transition-colors"
+              >
+                Saved Trips
+              </Link>
+              <Link
+                href="/dashboard/bookings"
+                className="hover:text-emerald-600 dark:text-neutral-300 dark:hover:text-emerald-300 transition-colors"
+              >
+                Bookings
+              </Link>
               {pathname === "/dashboard" ? null : (
                 <Link
                   href="/dashboard"
@@ -105,42 +110,55 @@ const NavBar = () => {
               >
                 How It Works
               </Link>
-              <Link
-                href="/#moods"
-                className="block text-lg dark:text-neutral-300 hover:text-emerald-600 dark:hover:text-emerald-300 transition-colors"
-              >
-                Moods
-              </Link>
-              <Link
-                href="/#features"
-                className="block text-lg dark:text-neutral-300 hover:text-emerald-600 dark:hover:text-emerald-300 transition-colors"
-              >
-                Features
-              </Link>
-              <div className="flex items-center gap-4">
-                <SignedOut>
+
+              <SignedOut>
+                <Link
+                  href="/#moods"
+                  className="hover:text-emerald-600 dark:text-neutral-300 dark:hover:text-emerald-300 transition-colors"
+                >
+                  Moods
+                </Link>
+                <Link
+                  href="/#features"
+                  className="hover:text-emerald-600 dark:text-neutral-300 dark:hover:text-emerald-300 transition-colors"
+                >
+                  Features
+                </Link>
+                <div className="flex gap-4 items-center">
                   <SignInButton>
-                    <button className="cursor-pointer">Sign in</button>
+                    <button className="cursor-pointer border py-1.5 px-4 rounded-lg bg-neutral-600 text-white hover:bg-neutral-700 transition-colors">
+                      Sign in
+                    </button>
                   </SignInButton>
-                  <SignUpButton>
-                    <Button className="bg-gradient-to-r from-emerald-600 to-green-700 hover:from-emerald-700 hover:to-green-800 text-white border-0 px-6 py-4 text-lg shadow-lg transition-colors duration-300">
-                      Get started
-                    </Button>
-                  </SignUpButton>
-                </SignedOut>
-                <SignedIn>
-                  {pathname === "/dashboard" ? null : (
-                    <Link
-                      href="/dashboard"
-                      className="transition-colors border py-1.5 px-4 rounded-lg bg-neutral-600 hover:bg-neutral-700 text-white shadow-lg"
-                    >
-                      Dashboard
-                    </Link>
-                  )}
+                  <ThemeSwitcher />
+                </div>
+              </SignedOut>
+              <SignedIn>
+                <Link
+                  href="/dashboard/saved-trips"
+                  className="hover:text-emerald-600 dark:text-neutral-300 dark:hover:text-emerald-300 transition-colors"
+                >
+                  Saved Trips
+                </Link>
+                <Link
+                  href="/dashboard/bookings"
+                  className="hover:text-emerald-600 dark:text-neutral-300 dark:hover:text-emerald-300 transition-colors"
+                >
+                  Bookings
+                </Link>
+                {pathname === "/dashboard" ? null : (
+                  <Link
+                    href="/dashboard"
+                    className="transition-colors border py-1.5 px-4 rounded-lg bg-neutral-600 hover:bg-neutral-700 text-white shadow-lg"
+                  >
+                    Dashboard
+                  </Link>
+                )}
+                <div className="flex gap-4">
                   <UserButton />
-                </SignedIn>
-                <ThemeSwitcher />
-              </div>
+                  <ThemeSwitcher />
+                </div>
+              </SignedIn>
             </div>
           </motion.div>
         )}

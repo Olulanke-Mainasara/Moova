@@ -23,10 +23,12 @@ export default function AddTripPreferenceTrigger({
   isLoading,
   submit,
   mood,
+  setSavedTrip,
 }: {
   isLoading: boolean;
   submit: (input?: any) => void;
   mood?: string;
+  setSavedTrip?: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const [open, setOpen] = React.useState(false);
   const [openMobile, setOpenMobile] = React.useState(false);
@@ -46,6 +48,7 @@ export default function AddTripPreferenceTrigger({
       return;
     }
 
+    setSavedTrip?.(false);
     if (submit) {
       submit({ mood, budget, timeframe, currency, departureDate, location });
     }

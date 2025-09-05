@@ -1,3 +1,4 @@
+import { Database } from "@/supabase";
 import { useSession, useUser } from "@clerk/nextjs";
 import { createClient } from "@supabase/supabase-js";
 
@@ -10,7 +11,7 @@ export function useClerkSupabaseClient() {
 
   // Create a custom Supabase client that injects the Clerk session token into the request headers
   function createClerkSupabaseClient() {
-    return createClient(
+    return createClient<Database>(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.NEXT_PUBLIC_SUPABASE_KEY!,
       {

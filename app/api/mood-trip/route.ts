@@ -1,6 +1,5 @@
-import { generateTitleFromUserMessage } from "@/app/dashboard/moods/[mood]/action";
 import { google } from "@ai-sdk/google";
-import { UIMessage, streamObject } from "ai";
+import { streamObject } from "ai";
 import { tripSchema } from "./schema";
 
 // Allow streaming responses up to 30 seconds

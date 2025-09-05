@@ -10,6 +10,8 @@ import { Icons } from "@/components/icons";
 import { toast } from "sonner";
 import { useClerkSupabaseClient } from "@/lib/clerkSupabaseClient";
 import AddTripPreferenceTrigger from "@/components/Custom/Buttons/AddTripPreferenceTrigger";
+import { convertRawDateToReadableDate } from "@/lib/utils";
+import { useTransitionRouter } from "next-view-transitions";
 
 export default function Page() {
   const {
@@ -27,6 +29,9 @@ export default function Page() {
   const [showItinerary, setShowItinerary] = useState(false);
   const [isBooking, setIsBooking] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [bookedTrip, setBookedTrip] = useState(false);
+  const [savedTrip, setSavedTrip] = useState(false);
+  const router = useTransitionRouter();
 
   useEffect(() => {
     submit({ mood: mood });
@@ -55,6 +60,7 @@ export default function Page() {
             })
           }
           disabled={isLoading}
+          className="text-lg"
         >
           Re-generate Trip
         </Button>
@@ -62,14 +68,41 @@ export default function Page() {
     );
   }
 
-  const bookTrip = () => {
+  const bookTrip = async () => {
+    if (!user) {
+      toast.error("You must be logged in to save your trip.");
+      return;
+    }
+
+    if (bookedTrip) {
+      toast.error("You recently booked this trip.");
+      return;
+    }
+
     setIsBooking(true);
-    setTimeout(() => {
+    const { error } = await supabase
+      .from("bookings")
+      .insert([
+        {
+          user_id: user.id,
+          booking_data: trip as any,
+          status: "pending",
+        },
+      ])
+      .select();
+
+    if (error) {
+      toast.error("There was an error booking your trip. Please try again.", {
+        description: error.message,
+      });
       setIsBooking(false);
-      toast.success(
-        "Your trip has been booked, check your email for your details and receipts"
-      );
-    }, 2000);
+      return;
+    }
+
+    toast.success("Trip booked successfully!");
+    setBookedTrip(true);
+    setIsBooking(false);
+    router.push("/dashboard/moods/booking-successful");
   };
 
   const saveTrip = async () => {
@@ -78,29 +111,43 @@ export default function Page() {
       return;
     }
 
+    if (savedTrip) {
+      toast.error("You have already saved this trip.");
+      return;
+    }
+
     setIsSaving(true);
-    const { error } = await supabase.from("trips").insert([
-      {
-        user_id: user?.id,
-        mood_slug: mood,
-        title: trip.title,
-        destination: trip.destination?.city,
-        full_details: trip,
-        timeframe: `${trip.timeframe?.startDate} - ${trip.timeframe?.endDate}`,
-        budget: `${trip.budget?.currency}${trip.budget?.total}`,
-      },
-    ]);
+    const { error } = await supabase
+      .from("trips")
+      .insert([
+        {
+          user_id: user.id,
+          mood_slug: mood ?? "",
+          title: trip.title ?? "",
+          destination: `${trip.destination?.country ?? ""}, ${
+            trip.destination?.city ?? ""
+          }`,
+          full_details: trip as any,
+          timeframe: `${
+            convertRawDateToReadableDate(trip.timeframe?.startDate ?? "") ?? ""
+          } - ${
+            convertRawDateToReadableDate(trip.timeframe?.endDate ?? "") ?? ""
+          }`,
+          budget: `${trip.budget?.currency ?? ""}${trip.budget?.total ?? ""}`,
+        },
+      ])
+      .select();
 
     if (error) {
       toast.error("There was an error saving your trip. Please try again.", {
         description: error.message,
       });
-      console.log(user);
       setIsSaving(false);
       return;
     }
 
     toast.success("Trip saved to your account!");
+    setSavedTrip(true);
     setIsSaving(false);
   };
 
@@ -109,7 +156,7 @@ export default function Page() {
       {isBooking && (
         <div className="absolute inset-0 bg-black/90 z-50 flex items-center justify-center">
           <div className="p-6 rounded-lg shadow-lg text-center">
-            <p className="flex items-center text-2xl">
+            <p className="flex items-center text-2xl text-white">
               <Icons.spinner className="animate-spin mr-2" />
               Processing your booking
             </p>
@@ -137,6 +184,7 @@ export default function Page() {
                 isLoading={isLoading}
                 submit={submit}
                 mood={mood}
+                setSavedTrip={setSavedTrip}
               />
             </div>
 
@@ -147,7 +195,7 @@ export default function Page() {
                   <p className="font-medium text-2xl md:text-3xl">Start</p>
                   <p className="text-neutral-500">
                     {trip.timeframe?.startDate
-                      ? new Date(trip.timeframe.startDate).toDateString()
+                      ? convertRawDateToReadableDate(trip.timeframe.startDate)
                       : "N/A"}
                   </p>
                 </div>
@@ -155,7 +203,7 @@ export default function Page() {
                   <p className="font-medium text-2xl md:text-3xl">End</p>
                   <p className="text-neutral-500">
                     {trip.timeframe?.endDate
-                      ? new Date(trip.timeframe.endDate).toDateString()
+                      ? convertRawDateToReadableDate(trip.timeframe.endDate)
                       : "N/A"}
                   </p>
                 </div>
