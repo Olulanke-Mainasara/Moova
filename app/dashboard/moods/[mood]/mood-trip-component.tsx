@@ -86,7 +86,7 @@ export default function Page() {
         {
           user_id: user.id,
           booking_data: trip as any,
-          status: "pending",
+          status: "booked",
         },
       ])
       .select();
