@@ -137,7 +137,7 @@ export default function TripDetails() {
         {
           user_id: user.id,
           booking_data: tripDetails.full_details as any,
-          status: "pending",
+          status: "booked",
         },
       ])
       .select();
@@ -227,7 +227,7 @@ export default function TripDetails() {
   };
 
   return (
-    <div className="min-h-screen pt-20 pb-4 px-4 container mx-auto flex items-center">
+    <div className="min-h-screen pt-20 pb-4 px-4 max-w-4xl mx-auto flex items-center">
       {isBooking && (
         <div className="absolute inset-0 bg-black/90 z-50 flex items-center justify-center">
           <div className="p-6 rounded-lg shadow-lg text-center">
