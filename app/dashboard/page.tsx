@@ -16,11 +16,11 @@ interface Mood {
 }
 
 const images = [
-  "/gobyvibe1.jpg",
-  "/gobyvibe2.jpg",
-  "/gobyvibe3.jpg",
-  "/gobyvibe4.jpg",
-  "/gobyvibe5.webp",
+  "/moova1.jpg",
+  "/moova2.jpg",
+  "/moova3.jpg",
+  "/moova4.jpg",
+  "/moova5.webp",
 ];
 
 const Dashboard = () => {
@@ -61,7 +61,7 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="w-full h-screen flex items-center justify-center container mx-auto px-4">
+    <div className="w-full h-screen flex items-center justify-center max-w-screen-2xl mx-auto">
       <section className="xl:w-1/2 bg-black h-full relative hidden xl:block">
         <AnimatePresence>
           <motion.img
@@ -78,7 +78,7 @@ const Dashboard = () => {
               <div
                 key={index}
                 className={`h-3 w-3 ${
-                  index === currentImageCount ? "bg-green-600" : "bg-white"
+                  index === currentImageCount ? "bg-indigo-600" : "bg-white"
                 } rounded-full`}
               ></div>
             ))}
@@ -88,7 +88,7 @@ const Dashboard = () => {
       <section className="space-y-3 text-center xl:w-1/2">
         <p className="text-2xl md:text-3xl">
           How are you feeling today
-          <span className="text-green-600">?</span>
+          <span className="text-indigo-600">?</span>
         </p>
 
         {moods.length === 0 ? (

@@ -308,7 +308,7 @@ export default function TripDetails() {
                 </div>
                 <Button
                   onClick={bookTrip}
-                  className="bg-gradient-to-r from-emerald-600 to-green-700 hover:from-emerald-700 hover:to-green-800 text-white border-0 px-8 py-4 text-lg shadow-lg transition-colors duration-300"
+                  className="bg-indigo-600 hover:bg-indigo-700 text-white border-0 px-8 py-4 text-lg shadow-lg transition-colors duration-300"
                 >
                   Book Trip
                 </Button>
@@ -385,7 +385,7 @@ export default function TripDetails() {
                   (day) => (
                     <div
                       key={day?.day}
-                      className="border-l-4 space-y-3 border-emerald-500 pl-4"
+                      className="border-l-4 space-y-3 border-indigo-500 pl-4"
                     >
                       <h3 className="font-bold text-xl">
                         Day {day?.day}: {day?.title}
@@ -430,7 +430,11 @@ export default function TripDetails() {
               </div>
 
               <div className="flex flex-col">
-                <p className="text-2xl font-bold">Keep this vibe!</p>
+                {savedTrip ? (
+                  <p className="text-2xl font-bold">Not feeling it?</p>
+                ) : (
+                  <p className="text-2xl font-bold">Keep this vibe!</p>
+                )}
                 {savedTrip ? (
                   <p className="text-neutral-500 mb-2">
                     Delete this trip details from your account, permanently.

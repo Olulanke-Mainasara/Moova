@@ -19,6 +19,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import Splash from "@/components/Custom/Splash/Splash";
+import { motion } from "framer-motion";
 import { Link } from "next-view-transitions";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 import { steps, moods } from "@/lib/staticData";
@@ -57,24 +58,25 @@ export default function Home() {
                     const Icon = [MapPin, Mountain, Coffee][
                       Math.floor(Math.random() * 3)
                     ];
-                    return <Icon className="w-6 h-6 text-emerald-400" />;
+                    return <Icon className="w-6 h-6 text-indigo-400" />;
                   })()}
                 </div>
               ))}
             </div>
 
-            <div className="relative z-10 text-center max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-              <h1 className="text-5xl md:text-7xl font-bold mb-6 text-balance leading-tight">
-                <span className="text-emerald-500 dark:bg-gradient-to-r from-white via-emerald-200 to-green-200 dark:bg-clip-text dark:text-transparent">
-                  Travel by Vibe,
-                </span>
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 2.1, ease: "easeOut" }}
+              className="relative z-10 text-center max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"
+            >
+              <h1 className="text-4xl md:text-7xl mb-6 text-balance leading-tight text-neutral-900 dark:text-white">
+                Plan by Mood.
                 <br />
-                <span className="bg-gradient-to-r from-emerald-500 to-green-600 bg-clip-text text-transparent">
-                  Not by Guidebook
-                </span>
+                Travel Like It Matters.
               </h1>
 
-              <p className="text-xl md:text-2xl text-neutral-900 dark:text-neutral-300 mb-8 max-w-2xl mx-auto leading-relaxed">
+              <p className="md:text-2xl text-neutral-700 dark:text-neutral-300 mb-8 max-w-xl mx-auto leading-relaxed">
                 AI-powered mood-based travel curator that generates personalized
                 destinations, itineraries, and seamless bookings based on how
                 you want to feel.
@@ -85,10 +87,10 @@ export default function Home() {
                   <Button
                     size="lg"
                     asChild
-                    className="bg-gradient-to-r from-emerald-600 to-green-700 hover:from-emerald-700 hover:to-green-800 text-white border-0 px-8 py-4 text-lg font-semibold shadow-lg transition-colors duration-300"
+                    className="bg-indigo-600 hover:bg-indigo-700 text-white border-0 px-8 py-4 text-lg font-semibold shadow-lg transition-colors duration-300"
                   >
                     <Link href={"/dashboard"}>
-                      Explore Your Vibe <ArrowRight className="w-5 h-5" />
+                      Open Dashboard <ArrowRight className="w-5 h-5" />
                     </Link>
                   </Button>
                 </div>
@@ -99,15 +101,15 @@ export default function Home() {
                   <Button
                     size="lg"
                     asChild
-                    className="bg-gradient-to-r from-emerald-600 to-green-700 hover:from-emerald-700 hover:to-green-800 text-white border-0 px-8 py-4 text-lg shadow-lg transition-colors duration-300"
+                    className="bg-indigo-600 hover:bg-indigo-700 text-white border-0 px-8 py-4 text-lg shadow-lg transition-colors duration-300"
                   >
                     <Link href={"/dashboard"}>
-                      Start Your Vibe Journey <ArrowRight className="w-5 h-5" />
+                      Start Planning <ArrowRight className="w-5 h-5" />
                     </Link>
                   </Button>
                 </div>
               </SignedOut>
-            </div>
+            </motion.div>
           </section>
 
           {/* How It Works */}
@@ -117,42 +119,46 @@ export default function Home() {
           >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                  <span className="bg-gradient-to-r from-emerald-500 to-green-600 bg-clip-text text-transparent">
-                    How It Works
-                  </span>
+                <h2 className="text-4xl md:text-5xl font-bold mb-4 text-indigo-600 dark:text-indigo-400">
+                  How Moova Works
                 </h2>
                 <p className="text-xl text-slate-400 max-w-2xl mx-auto">
-                  Three simple steps to your perfect mood-matched adventure
+                  From feeling to flight in three simple steps
                 </p>
               </div>
 
               <div className="grid md:grid-cols-3 gap-8">
                 {steps.map((step, index) => (
-                  <Card
+                  <motion.div
                     key={index}
-                    className="bg-slate-800/50 border-slate-700 backdrop-blur-sm hover:bg-slate-800/70 transition-colors duration-300"
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.2 }}
+                    transition={{ duration: 0.5, delay: index * 0.05 }}
+                    className="w-full"
                   >
-                    <CardContent className="p-8 text-center">
-                      <div className="mb-6">
-                        <div className="w-16 h-16 mx-auto rounded-full bg-gradient-to-br from-slate-700 to-slate-800 flex items-center justify-center mb-4">
-                          <step.icon className={`w-8 h-8 ${step.color}`} />
+                    <Card className="bg-slate-800/50 border-slate-700 backdrop-blur-sm hover:bg-slate-800/70 transition-colors duration-300">
+                      <CardContent className="p-8 text-center">
+                        <div className="mb-6">
+                          <div className="w-16 h-16 mx-auto rounded-full bg-slate-700 flex items-center justify-center mb-4">
+                            <step.icon className={`w-8 h-8 ${step.color}`} />
+                          </div>
+                          <Badge
+                            variant="outline"
+                            className="text-slate-400 border-slate-600"
+                          >
+                            {step.step}
+                          </Badge>
                         </div>
-                        <Badge
-                          variant="outline"
-                          className="text-slate-400 border-slate-600"
-                        >
-                          {step.step}
-                        </Badge>
-                      </div>
-                      <h3 className="text-xl font-semibold mb-3 text-white">
-                        {step.title}
-                      </h3>
-                      <p className="text-slate-400 leading-relaxed">
-                        {step.description}
-                      </p>
-                    </CardContent>
-                  </Card>
+                        <h3 className="text-xl font-semibold mb-3 text-white">
+                          {step.title}
+                        </h3>
+                        <p className="text-slate-400 leading-relaxed">
+                          {step.description}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
                 ))}
               </div>
             </div>
@@ -162,13 +168,11 @@ export default function Home() {
           <section id="moods" className="py-20">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                  <span className="bg-gradient-to-r from-emerald-500 to-green-600 bg-clip-text text-transparent">
-                    Choose Your Vibe
-                  </span>
+                <h2 className="text-4xl md:text-5xl font-bold mb-4 text-indigo-600 dark:text-indigo-400">
+                  Pick a Mood
                 </h2>
                 <p className="text-xl dark:text-neutral-300 max-w-2xl mx-auto">
-                  Every mood deserves the perfect destination
+                  Every feeling belongs somewhere
                 </p>
               </div>
 
@@ -206,33 +210,31 @@ export default function Home() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="grid lg:grid-cols-2 gap-12 items-center">
                 <div>
-                  <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                    <span className="bg-gradient-to-r from-emerald-500 to-green-600 bg-clip-text text-transparent">
-                      Curator in Action
-                    </span>
+                  <h2 className="text-4xl md:text-5xl font-bold mb-6 text-indigo-600 dark:text-indigo-400">
+                    See the Curator Work
                   </h2>
                   <p className="text-xl text-slate-400 mb-8 leading-relaxed">
-                    Watch our system analyze your mood and instantly generate
-                    personalized itineraries with hidden gems, local
-                    experiences, and perfect timing.
+                    Watch Moova read your vibe and spin up tailored itineraries
+                    with local gems, can’t-miss moments, and timings that just
+                    fit.
                   </p>
                   <div className="space-y-4">
                     <div className="flex items-center space-x-3">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-indigo-500 rounded-full"></div>
                       <span className="text-slate-300">
-                        Mood-based destination matching
+                        Mood-first destination matching
                       </span>
                     </div>
                     <div className="flex items-center space-x-3">
-                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
                       <span className="text-slate-300">
-                        Real-time availability and pricing
+                        Live availability and pricing
                       </span>
                     </div>
                     <div className="flex items-center space-x-3">
-                      <div className="w-2 h-2 bg-emerald-600 rounded-full"></div>
+                      <div className="w-2 h-2 bg-indigo-600 rounded-full"></div>
                       <span className="text-slate-300">
-                        Local insights and hidden gems
+                        Local insights and hidden corners
                       </span>
                     </div>
                   </div>
@@ -241,8 +243,8 @@ export default function Home() {
                 <Card className="bg-slate-800/50 border-slate-700 backdrop-blur-sm">
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between mb-4">
-                      <Badge className="bg-emerald-600/20 text-emerald-400 border-emerald-600/30">
-                        Relax & Recharge
+                      <Badge className="bg-indigo-600/20 text-indigo-400 border-indigo-600/30">
+                        Unwind & Restore
                       </Badge>
                       <div className="flex items-center space-x-1">
                         {[...Array(5)].map((_, i) => (
@@ -255,30 +257,30 @@ export default function Home() {
                     </div>
 
                     <h3 className="text-xl font-semibold mb-2 text-white">
-                      Bali Wellness Retreat
+                      Ubud Wellness Escape
                     </h3>
                     <p className="text-slate-400 mb-4">
-                      5 days of yoga, meditation, and spa treatments in Ubud
+                      Five days of yoga, meditation, and spa therapies in Ubud
                     </p>
 
                     <div className="space-y-3 mb-6">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-2">
-                          <Plane className="w-4 h-4 text-blue-400" />
+                          <Plane className="w-4 h-4 text-sky-400" />
                           <span className="text-sm text-slate-300">Flight</span>
                         </div>
                         <span className="text-sm text-white">$680</span>
                       </div>
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-2">
-                          <Hotel className="w-4 h-4 text-emerald-400" />
+                          <Hotel className="w-4 h-4 text-indigo-400" />
                           <span className="text-sm text-slate-300">Resort</span>
                         </div>
                         <span className="text-sm text-white">$320</span>
                       </div>
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-2">
-                          <Calendar className="w-4 h-4 text-green-400" />
+                          <Calendar className="w-4 h-4 text-purple-400" />
                           <span className="text-sm text-slate-300">
                             Activities
                           </span>
@@ -289,10 +291,10 @@ export default function Home() {
 
                     <Button
                       asChild
-                      className="w-full bg-gradient-to-r from-emerald-600 to-green-700 hover:from-emerald-700 hover:to-green-800 text-white border-0 text-lg"
+                      className="w-full bg-indigo-600 hover:bg-indigo-700 text-white border-0 text-lg"
                     >
                       <Link href={"/dashboard/moods/relax-and-recharge"}>
-                        Book This Vibe
+                        Book This Trip
                       </Link>
                     </Button>
                   </CardContent>
@@ -305,14 +307,11 @@ export default function Home() {
           <section id="features" className="py-20">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                  <span className="bg-gradient-to-r from-emerald-500 to-green-600 bg-clip-text text-transparent">
-                    Everything You Need
-                  </span>
+                <h2 className="text-4xl md:text-5xl font-bold mb-4 text-indigo-600 dark:text-indigo-400">
+                  Built for Effortless Travel
                 </h2>
                 <p className="text-xl dark:text-neutral-300 max-w-2xl mx-auto">
-                  From discovery to booking, we&apos;ve got your entire journey
-                  covered
+                  From discovery to checkout, every step is smooth and connected
                 </p>
               </div>
 
@@ -339,20 +338,26 @@ export default function Home() {
                     desc: "Hidden gems and cultural experiences",
                   },
                 ].map((feature, index) => (
-                  <Card
+                  <motion.div
                     key={index}
-                    className="bg-neutral-900 dark:bg-slate-800/30 dark:border-slate-700 backdrop-blur-sm dark:hover:bg-slate-800/50 transition-colors duration-300"
+                    initial={{ opacity: 0, y: 12 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.2 }}
+                    transition={{ duration: 0.45, delay: index * 0.06 }}
+                    className="w-full"
                   >
-                    <CardContent className="p-6 text-center">
-                      <div className="w-12 h-12 mx-auto mb-4 bg-gradient-to-br from-slate-700 to-slate-800 rounded-lg flex items-center justify-center">
-                        <feature.icon className="w-6 h-6 text-emerald-500" />
-                      </div>
-                      <h3 className="font-semibold mb-2 text-xl text-white">
-                        {feature.title}
-                      </h3>
-                      <p className="text-slate-400">{feature.desc}</p>
-                    </CardContent>
-                  </Card>
+                    <Card className="bg-neutral-900 dark:bg-slate-800/30 dark:border-slate-700 backdrop-blur-sm dark:hover:bg-slate-800/50 transition-colors duration-300">
+                      <CardContent className="p-6 text-center">
+                        <div className="w-12 h-12 mx-auto mb-4 bg-slate-700 rounded-lg flex items-center justify-center">
+                          <feature.icon className="w-6 h-6 text-indigo-500" />
+                        </div>
+                        <h3 className="font-semibold mb-2 text-xl text-white">
+                          {feature.title}
+                        </h3>
+                        <p className="text-slate-400">{feature.desc}</p>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
                 ))}
               </div>
             </div>
@@ -361,20 +366,19 @@ export default function Home() {
           {/* Final CTA */}
           <section className="py-20 bg-neutral-900 dark:bg-slate-800/50">
             <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-emerald-500 to-green-600 bg-clip-text text-transparent">
-                Ready to Travel by Vibe?
+              <h2 className="text-4xl md:text-6xl font-bold mb-6 text-indigo-600 dark:text-indigo-400">
+                Ready to plan by mood?
               </h2>
               <p className="text-xl text-slate-400 mb-8 max-w-2xl mx-auto">
-                Join thousands of travelers who&apos;ve discovered their perfect
-                destinations through mood-based curation.
+                Join travelers who plan trips around feelings—not checklists.
               </p>
               <Button
                 asChild
                 size="lg"
-                className=" bg-gradient-to-r from-emerald-600 to-green-700 hover:from-emerald-700 hover:to-green-800 text-white border-0 px-8 py-4 text-lg font-semibold shadow-lg transition-colors duration-300"
+                className=" bg-indigo-600 hover:bg-indigo-700 text-white border-0 px-8 py-4 text-lg font-semibold shadow-lg transition-colors duration-300"
               >
                 <Link href={"/dashboard"}>
-                  Start Your Vibe Journey
+                  Start Planning
                   <ArrowRight className="w-5 h-5" />
                 </Link>
               </Button>
@@ -387,30 +391,30 @@ export default function Home() {
               <div className="flex flex-col md:flex-row justify-between items-center">
                 <Link href={"/"}>
                   <div className="flex items-center space-x-2 mb-4 md:mb-0">
-                    <div className="w-8 h-8 bg-gradient-to-br from-emerald-600 to-green-700 rounded-lg flex items-center justify-center">
+                    <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
                       <MapPin className="w-5 h-5 text-white" />
                     </div>
-                    <span className="text-xl font-bold bg-gradient-to-r from-emerald-500 to-green-600 bg-clip-text text-transparent">
-                      GoByVibe
+                    <span className="text-xl font-bold text-indigo-600 dark:text-indigo-400">
+                      Moova
                     </span>
                   </div>
                 </Link>
                 <div className="flex space-x-6 dark:text-neutral-300">
                   <a
                     href="#"
-                    className="hover:text-emerald-600 dark:hover:text-emerald-300 transition-colors"
+                    className="hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors"
                   >
                     Privacy
                   </a>
                   <a
                     href="#"
-                    className="hover:text-emerald-600 dark:hover:text-emerald-300 transition-colors"
+                    className="hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors"
                   >
                     Terms
                   </a>
                   <a
                     href="#"
-                    className="hover:text-emerald-600 dark:hover:text-emerald-300 transition-colors"
+                    className="hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors"
                   >
                     Support
                   </a>
@@ -418,8 +422,8 @@ export default function Home() {
               </div>
               <div className="mt-8 pt-8 border-t border-neutral-800 text-center dark:text-neutral-300">
                 <p>
-                  &copy; 2025 GoByVibe. All rights reserved. Travel by vibe, not
-                  by guidebook.
+                  &copy; 2025 Moova. All rights reserved. Plan by mood, not by
+                  checklist.
                 </p>
               </div>
             </div>

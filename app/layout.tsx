@@ -23,7 +23,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "GoByVibe",
+  title: "Moova",
   description:
     "AI-powered mood-based travel curator that generates personalized destinations, itineraries, and seamless bookings based on how you want to feel.",
 };

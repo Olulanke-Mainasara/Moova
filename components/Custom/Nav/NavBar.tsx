@@ -19,11 +19,11 @@ const NavBar = () => {
         <div className="flex justify-between items-center h-16">
           <Link href={"/"}>
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-emerald-600 to-green-700 rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
                 <MapPin className="w-5 h-5 text-white" />
               </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-emerald-500 to-green-600 bg-clip-text text-transparent">
-                GoByVibe
+              <span className="text-xl font-bold text-indigo-600 dark:text-indigo-400">
+                Moova
               </span>
             </div>
           </Link>
@@ -31,7 +31,7 @@ const NavBar = () => {
           <div className="hidden md:flex items-center gap-8">
             <Link
               href="/#how-it-works"
-              className="hover:text-emerald-600 dark:text-neutral-300 dark:hover:text-emerald-300 transition-colors"
+              className="hover:text-indigo-600 dark:text-neutral-300 dark:hover:text-indigo-300 transition-colors"
             >
               How It Works
             </Link>
@@ -39,13 +39,13 @@ const NavBar = () => {
             <SignedOut>
               <Link
                 href="/#moods"
-                className="hover:text-emerald-600 dark:text-neutral-300 dark:hover:text-emerald-300 transition-colors"
+                className="hover:text-indigo-600 dark:text-neutral-300 dark:hover:text-indigo-300 transition-colors"
               >
                 Moods
               </Link>
               <Link
                 href="/#features"
-                className="hover:text-emerald-600 dark:text-neutral-300 dark:hover:text-emerald-300 transition-colors"
+                className="hover:text-indigo-600 dark:text-neutral-300 dark:hover:text-indigo-300 transition-colors"
               >
                 Features
               </Link>
@@ -58,20 +58,20 @@ const NavBar = () => {
             <SignedIn>
               <Link
                 href="/dashboard/saved-trips"
-                className="hover:text-emerald-600 dark:text-neutral-300 dark:hover:text-emerald-300 transition-colors"
+                className="hover:text-indigo-600 dark:text-neutral-300 dark:hover:text-indigo-300 transition-colors"
               >
                 Saved Trips
               </Link>
               <Link
                 href="/dashboard/bookings"
-                className="hover:text-emerald-600 dark:text-neutral-300 dark:hover:text-emerald-300 transition-colors"
+                className="hover:text-indigo-600 dark:text-neutral-300 dark:hover:text-indigo-300 transition-colors"
               >
                 Bookings
               </Link>
               {pathname === "/dashboard" ? null : (
                 <Link
                   href="/dashboard"
-                  className="transition-colors border py-1.5 px-4 rounded-lg bg-neutral-600 hover:bg-neutral-700 text-white shadow-lg"
+                  className="transition-colors border py-1.5 px-4 rounded-lg bg-neutral-600 hover:bg-neutral-700 text-white"
                 >
                   Dashboard
                 </Link>
@@ -106,7 +106,7 @@ const NavBar = () => {
             <div className="px-4 py-4 space-y-4 flex flex-col items-center">
               <Link
                 href="/#how-it-works"
-                className="block text-lg dark:text-neutral-300 hover:text-emerald-600 dark:hover:text-emerald-300 transition-colors"
+                className="block text-lg dark:text-neutral-300 hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors"
               >
                 How It Works
               </Link>
@@ -114,13 +114,13 @@ const NavBar = () => {
               <SignedOut>
                 <Link
                   href="/#moods"
-                  className="hover:text-emerald-600 dark:text-neutral-300 dark:hover:text-emerald-300 transition-colors"
+                  className="hover:text-indigo-600 dark:text-neutral-300 dark:hover:text-indigo-300 transition-colors"
                 >
                   Moods
                 </Link>
                 <Link
                   href="/#features"
-                  className="hover:text-emerald-600 dark:text-neutral-300 dark:hover:text-emerald-300 transition-colors"
+                  className="hover:text-indigo-600 dark:text-neutral-300 dark:hover:text-indigo-300 transition-colors"
                 >
                   Features
                 </Link>
@@ -136,13 +136,13 @@ const NavBar = () => {
               <SignedIn>
                 <Link
                   href="/dashboard/saved-trips"
-                  className="hover:text-emerald-600 dark:text-neutral-300 dark:hover:text-emerald-300 transition-colors"
+                  className="hover:text-indigo-600 dark:text-neutral-300 dark:hover:text-indigo-300 transition-colors"
                 >
                   Saved Trips
                 </Link>
                 <Link
                   href="/dashboard/bookings"
-                  className="hover:text-emerald-600 dark:text-neutral-300 dark:hover:text-emerald-300 transition-colors"
+                  className="hover:text-indigo-600 dark:text-neutral-300 dark:hover:text-indigo-300 transition-colors"
                 >
                   Bookings
                 </Link>

@@ -148,7 +148,7 @@ const SavedTrips = () => {
               <div className="flex gap-2">
                 <Button
                   onClick={() => bookTrip(trip.full_details)}
-                  className="bg-gradient-to-r from-emerald-600 to-green-700 hover:from-emerald-700 hover:to-green-800 text-white border-0 px-8 py-4 shadow-lg transition-colors duration-300"
+                  className="bg-indigo-600 hover:bg-indigo-700 text-white border-0 px-8 py-4 shadow-lg transition-colors duration-300"
                 >
                   Book Trip
                 </Button>

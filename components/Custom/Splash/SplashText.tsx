@@ -11,9 +11,7 @@ function SplashText() {
       }}
       className="flex items-center justify-center"
     >
-      <h1>
-        Go<span className="text-green-500">By</span>Vibe
-      </h1>
+      <h1 className="text-indigo-600 dark:text-indigo-400">Moova</h1>
     </motion.div>
   );
 }
