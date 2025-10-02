@@ -325,7 +325,7 @@ export default function Page() {
                 </p>
                 <div className="text-slate-700 space-y-2">
                   {trip.extras?.culturalInsights?.map((insight, idx) => (
-                    <div className="flex gap-2">
+                    <div className="flex gap-2" key={idx}>
                       <span className="text-indigo-600 font-bold">&bull;</span>
                       <p key={idx} className="text-black">
                         {insight}

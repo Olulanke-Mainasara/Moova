@@ -99,7 +99,7 @@ export default function AddTripPreferenceTrigger({
                   onChange={(e) => setCurrency(e.target.value)}
                 >
                   {Object.entries(currencyMap).map(([key, value]) => (
-                    <option value={key}>
+                    <option value={key} key={key}>
                       {value} ({key})
                     </option>
                   ))}

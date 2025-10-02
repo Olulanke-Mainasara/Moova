@@ -45,8 +45,8 @@ const BookTripTrigger = ({ bookTrip }: { bookTrip: () => void }) => {
               <DrawerTitle className="text-2xl">Book Trip</DrawerTitle>
               <DrawerDescription>
                 Are you sure you want to book this trip? Once you confirm, your
-                trip details will be saved and you'll be guided through the next
-                steps. Please review your preferences and budget before
+                trip details will be saved and you&apos;ll be guided through the
+                next steps. Please review your preferences and budget before
                 proceeding.
               </DrawerDescription>
             </DrawerHeader>
@@ -79,8 +79,8 @@ const BookTripTrigger = ({ bookTrip }: { bookTrip: () => void }) => {
               <DialogTitle className="text-2xl">Book Trip</DialogTitle>
               <DialogDescription>
                 Are you sure you want to book this trip? Once you confirm, your
-                trip details will be saved and you'll be guided through the next
-                steps. Please review your preferences and budget before
+                trip details will be saved and you&apos;ll be guided through the
+                next steps. Please review your preferences and budget before
                 proceeding.
               </DialogDescription>
             </DialogHeader>
