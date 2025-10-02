@@ -109,7 +109,7 @@ const Bookings = () => {
                     </TableCell>
                     <TableCell className="text-right font-extralight text-xl">
                       {bookingData?.budget.currency +
-                        bookingData.budget.total.toFixed(0)}
+                        bookingData.budget.total.toLocaleString()}
                     </TableCell>
                     <TableCell className="text-right font-extralight text-xl">
                       {booking?.created_at

@@ -12,6 +12,8 @@ import { useClerkSupabaseClient } from "@/lib/clerkSupabaseClient";
 import AddTripPreferenceTrigger from "@/components/Custom/Buttons/AddTripPreferenceTrigger";
 import { convertRawDateToReadableDate } from "@/lib/utils";
 import { useTransitionRouter } from "next-view-transitions";
+import { ArrowDown } from "lucide-react";
+import BookTripTrigger from "@/components/Custom/Buttons/BookTripTrigger";
 
 export default function Page() {
   const {
@@ -133,7 +135,9 @@ export default function Page() {
           } - ${
             convertRawDateToReadableDate(trip.timeframe?.endDate ?? "") ?? ""
           }`,
-          budget: `${trip.budget?.currency ?? ""}${trip.budget?.total ?? ""}`,
+          budget: `${trip.budget?.currency ?? ""}${
+            trip.budget?.total?.toLocaleString() ?? ""
+          }`,
         },
       ])
       .select();
@@ -214,12 +218,7 @@ export default function Page() {
                   </p>
                   <p className="text-neutral-500">Total Estimated Budget</p>
                 </div>
-                <Button
-                  onClick={bookTrip}
-                  className="bg-indigo-600 hover:bg-indigo-700 text-white border-0 px-8 py-4 text-lg shadow-lg transition-colors duration-300"
-                >
-                  Book Trip
-                </Button>
+                <BookTripTrigger bookTrip={bookTrip} />
               </div>
 
               {/* Budget Breakdown */}
@@ -317,13 +316,23 @@ export default function Page() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
               {/* Extras */}
-              <div className="bg-white rounded-xl p-4 md:col-span-2">
-                <p className="font-bold text-black mb-2 text-xl">Extras</p>
-                <ul className="list-disc list-inside text-sm text-slate-700 space-y-1">
+              <div className="bg-white dark:bg-slate-100 rounded-xl p-4 md:col-span-2 md:max-h-[200px] overflow-y-auto">
+                <p className="font-bold text-black mb-2 text-xl flex justify-between items-center">
+                  Extras{" "}
+                  <span className="text-sm text-neutral-500 flex items-center gap-2">
+                    scroll <ArrowDown className="w-4 h-4 text-indigo-600" />
+                  </span>
+                </p>
+                <div className="text-slate-700 space-y-2">
                   {trip.extras?.culturalInsights?.map((insight, idx) => (
-                    <li key={idx}>{insight}</li>
+                    <div className="flex gap-2">
+                      <span className="text-indigo-600 font-bold">&bull;</span>
+                      <p key={idx} className="text-black">
+                        {insight}
+                      </p>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </div>
 
               <div className="flex flex-col">

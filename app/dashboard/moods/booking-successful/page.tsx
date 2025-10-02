@@ -10,7 +10,7 @@ const BookingSuccessful = () => {
         You have successfully booked a trip, check your dashboard to view it in
         the bookings page, and check your email for updates.
       </p>
-      <Button asChild>
+      <Button className="text-lg py-6" asChild>
         <Link href="/dashboard">Dashboard</Link>
       </Button>
     </div>

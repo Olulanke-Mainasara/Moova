@@ -65,7 +65,7 @@ export default function Home() {
             </div>
 
             <motion.div
-              initial={{ opacity: 0, y: 12 }}
+              initial={splashed ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 2.1, ease: "easeOut" }}
               className="relative z-10 text-center max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"

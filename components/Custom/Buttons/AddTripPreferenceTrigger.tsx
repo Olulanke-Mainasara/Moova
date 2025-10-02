@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { currencyMap } from "@/lib/utils";
 
 export default function AddTripPreferenceTrigger({
   isLoading,
@@ -82,7 +83,7 @@ export default function AddTripPreferenceTrigger({
                 <input
                   className="p-2 border border-neutral-500 rounded w-full"
                   type="text"
-                  placeholder="Location (optional)"
+                  placeholder="Location"
                   onChange={(e) => setLocation(e.target.value)}
                 />
 
@@ -97,11 +98,11 @@ export default function AddTripPreferenceTrigger({
                   className="p-2 border border-neutral-500 rounded w-full"
                   onChange={(e) => setCurrency(e.target.value)}
                 >
-                  <option value="USD">USD ($)</option>
-                  <option value="EUR">EUR (€)</option>
-                  <option value="GBP">GBP (£)</option>
-                  <option value="JPY">JPY (¥)</option>
-                  <option value="NGN">NGN (₦)</option>
+                  {Object.entries(currencyMap).map(([key, value]) => (
+                    <option value={key}>
+                      {value} ({key})
+                    </option>
+                  ))}
                 </select>
 
                 <input

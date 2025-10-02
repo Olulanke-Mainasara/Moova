@@ -277,3 +277,43 @@ export function slugToTitleCase(slug: string) {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 }
+
+export const currencyMap: { [key: string]: string } = {
+  USD: "$",
+  EUR: "€",
+  GBP: "£",
+  JPY: "¥",
+  CNY: "¥",
+  NGN: "₦",
+  INR: "₹",
+  KRW: "₩",
+  RUB: "₽",
+  BRL: "R$",
+  ZAR: "R",
+  AUD: "A$",
+  CAD: "C$",
+  CHF: "Fr",
+  SEK: "kr",
+  NOK: "kr",
+  DKK: "kr",
+  PLN: "zł",
+  THB: "฿",
+  IDR: "Rp",
+  MYR: "RM",
+  PHP: "₱",
+  SGD: "S$",
+  HKD: "HK$",
+  NZD: "NZ$",
+  MXN: "Mex$",
+  AED: "د.إ",
+  SAR: "﷼",
+  TRY: "₺",
+  EGP: "E£",
+  KES: "KSh",
+  GHS: "₵",
+};
+
+// Add this helper function before your POST function
+export const getCurrencySymbol = (currency: string): string => {
+  return currencyMap[currency?.toUpperCase()] || currency || "$";
+};
