@@ -90,7 +90,7 @@ export default function Home() {
                     className="bg-indigo-600 hover:bg-indigo-700 text-white border-0 px-8 py-4 text-lg font-semibold shadow-lg transition-colors duration-300"
                   >
                     <Link href={"/dashboard"}>
-                      Open Dashboard <ArrowRight className="w-5 h-5" />
+                      Start Planning <ArrowRight className="w-5 h-5" />
                     </Link>
                   </Button>
                 </div>
@@ -115,7 +115,7 @@ export default function Home() {
           {/* How It Works */}
           <section
             id="how-it-works"
-            className="py-20 bg-neutral-900 dark:bg-slate-800/50"
+            className="py-20 bg-neutral-900 dark:bg-slate-800/50 rounded-t-2xl"
           >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-16">
@@ -206,7 +206,7 @@ export default function Home() {
           </section>
 
           {/* AI Curator Demo */}
-          <section className="py-20 bg-neutral-900 dark:bg-slate-800/50">
+          <section className="py-20 bg-neutral-900 dark:bg-slate-800/50 rounded-b-2xl">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="grid lg:grid-cols-2 gap-12 items-center">
                 <div>
@@ -364,7 +364,7 @@ export default function Home() {
           </section>
 
           {/* Final CTA */}
-          <section className="py-20 bg-neutral-900 dark:bg-slate-800/50">
+          <section className="py-20 bg-neutral-900 dark:bg-slate-800/50 rounded-t-2xl">
             <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
               <h2 className="text-4xl md:text-6xl font-bold mb-6 text-indigo-600 dark:text-indigo-400">
                 Ready to plan by mood?
