@@ -48,7 +48,7 @@ export default function Home() {
               {[...Array(8)].map((_, i) => (
                 <div
                   key={i}
-                  className="absolute opacity-10"
+                  className="absolute opacity-30 dark:opacity-10"
                   style={{
                     left: `${Math.random() * 100}%`,
                     top: `${Math.random() * 100}%`,
