@@ -14,7 +14,13 @@ const NavBar = () => {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed top-0 w-full z-40 bg-neutral-100/80 dark:bg-neutral-900/80 backdrop-blur-md">
+    <nav
+      className={`fixed top-0 w-full z-40 ${
+        pathname !== "/dashboard"
+          ? "bg-neutral-100/80 dark:bg-neutral-900/80 backdrop-blur-md"
+          : ""
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           <Link href={"/"}>

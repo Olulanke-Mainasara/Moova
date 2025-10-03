@@ -36,7 +36,7 @@ const BookTripTrigger = ({ bookTrip }: { bookTrip: () => void }) => {
       <div className="md:hidden">
         <Drawer open={openMobile} onOpenChange={setOpenMobile}>
           <DrawerTrigger asChild>
-            <Button className="bg-indigo-600 hover:bg-indigo-700 text-white border-0 px-8 py-4 text-lg transition-colors duration-300">
+            <Button className="bg-indigo-600 hover:bg-indigo-700 text-white border-0 px-8 py-4 transition-colors duration-300">
               Book Trip
             </Button>
           </DrawerTrigger>
@@ -70,7 +70,7 @@ const BookTripTrigger = ({ bookTrip }: { bookTrip: () => void }) => {
       <div className="hidden md:block">
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild className="cursor-pointer">
-            <Button className="bg-indigo-600 hover:bg-indigo-700 text-white border-0 px-8 py-4 text-lg transition-colors duration-300">
+            <Button className="bg-indigo-600 hover:bg-indigo-700 text-white border-0 px-8 py-4 transition-colors duration-300">
               Book Trip
             </Button>
           </DialogTrigger>
@@ -85,17 +85,17 @@ const BookTripTrigger = ({ bookTrip }: { bookTrip: () => void }) => {
               </DialogDescription>
             </DialogHeader>
             <DialogFooter className="mt-2">
-              <DialogClose>
-                <Button className="px-8 py-4 transition-colors duration-300">
-                  Cancel
-                </Button>
-              </DialogClose>
               <Button
                 onClick={handleBooking}
                 className="bg-indigo-600 hover:bg-indigo-700 text-white border-0 px-8 py-4 transition-colors duration-300"
               >
                 Book Trip
               </Button>
+              <DialogClose>
+                <span className="px-8 py-2.5 rounded-lg bg-black text-white dark:bg-white dark:text-black transition-colors duration-300 cursor-pointer">
+                  Cancel
+                </span>
+              </DialogClose>
             </DialogFooter>
           </DialogContent>
         </Dialog>

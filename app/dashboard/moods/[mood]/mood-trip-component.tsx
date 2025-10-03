@@ -4,7 +4,7 @@ import { experimental_useObject as useObject } from "@ai-sdk/react";
 import { tripSchema } from "@/app/api/mood-trip/schema";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { Icons } from "@/components/icons";
 import { toast } from "sonner";
@@ -14,6 +14,7 @@ import { convertRawDateToReadableDate } from "@/lib/utils";
 import { useTransitionRouter } from "next-view-transitions";
 import { ArrowDown } from "lucide-react";
 import BookTripTrigger from "@/components/Custom/Buttons/BookTripTrigger";
+import { TripLoadingStates } from "@/components/Custom/TripLoadingStates";
 
 export default function Page() {
   const {
@@ -41,32 +42,33 @@ export default function Page() {
   }, []);
 
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <p className="text-2xl flex items-center">
-          <Icons.spinner className="mr-2 animate-spin" />
-          Generating your trip
-        </p>
-      </div>
-    );
+    return <TripLoadingStates />;
   }
 
   if (!trip) {
     return (
-      <div className="w-full flex flex-col items-center justify-center gap-4 p-4 relative h-screen">
-        <p className="text-2xl">Failed to generate trip. Try again?</p>
-        <Button
-          onClick={() =>
-            submit({
-              mood: mood,
-            })
-          }
-          disabled={isLoading}
-          className="text-lg"
+      <AnimatePresence>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.4 }}
+          className="w-full flex flex-col items-center justify-center gap-4 p-4 relative h-screen"
         >
-          Re-generate Trip
-        </Button>
-      </div>
+          <p className="text-2xl">Failed to generate trip. Try again?</p>
+          <Button
+            onClick={() =>
+              submit({
+                mood: mood,
+              })
+            }
+            disabled={isLoading}
+            className="text-lg"
+          >
+            Re-generate Trip
+          </Button>
+        </motion.div>
+      </AnimatePresence>
     );
   }
 
@@ -158,14 +160,22 @@ export default function Page() {
   return (
     <div className="min-h-screen pt-20 pb-4 px-4 max-w-4xl mx-auto flex items-center">
       {isBooking && (
-        <div className="absolute inset-0 bg-black/90 z-50 flex items-center justify-center">
-          <div className="p-6 rounded-lg shadow-lg text-center">
-            <p className="flex items-center text-2xl text-white">
-              <Icons.spinner className="animate-spin mr-2" />
-              Processing your booking
-            </p>
-          </div>
-        </div>
+        <AnimatePresence>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+            className="absolute inset-0 bg-black/90 z-50 flex items-center justify-center"
+          >
+            <div className="p-6 rounded-lg shadow-lg text-center">
+              <p className="flex items-center text-2xl text-white">
+                <Icons.spinner className="animate-spin mr-2" />
+                Processing your booking
+              </p>
+            </div>
+          </motion.div>
+        </AnimatePresence>
       )}
 
       <motion.div
@@ -247,7 +257,7 @@ export default function Page() {
               <Button
                 variant="outline"
                 onClick={() => setShowItinerary(!showItinerary)}
-                className="w-full text-lg md:text-base"
+                className="w-full"
               >
                 {showItinerary ? "Hide Itinerary" : "View Itinerary"}
               </Button>
@@ -316,7 +326,7 @@ export default function Page() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
               {/* Extras */}
-              <div className="bg-white dark:bg-slate-100 rounded-xl p-4 md:col-span-2 md:max-h-[200px] overflow-y-auto">
+              <div className="bg-white dark:bg-slate-100 rounded-xl p-4 md:col-span-2 md:h-[200px] overflow-auto">
                 <p className="font-bold text-black mb-2 text-xl flex justify-between items-center">
                   Extras{" "}
                   <span className="text-sm text-neutral-500 flex items-center gap-2">
@@ -341,7 +351,7 @@ export default function Page() {
                   Save your trip details to your account for easy access and
                   future reference.
                 </p>
-                <Button onClick={saveTrip} className="text-lg md:text-base">
+                <Button onClick={saveTrip}>
                   {isSaving ? (
                     <span className="flex items-center">
                       <Icons.spinner className="mr-2 animate-spin" />

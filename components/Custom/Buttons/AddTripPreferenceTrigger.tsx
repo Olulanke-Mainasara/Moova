@@ -62,7 +62,7 @@ export default function AddTripPreferenceTrigger({
       <div className="md:hidden">
         <Drawer open={openMobile} onOpenChange={setOpenMobile}>
           <DrawerTrigger asChild>
-            <Button className="text-lg">Add preferences</Button>
+            <Button>Add preferences</Button>
           </DrawerTrigger>
           <DrawerContent>
             <DrawerHeader className="text-left pb-0">
@@ -83,7 +83,7 @@ export default function AddTripPreferenceTrigger({
                 <input
                   className="p-2 border border-neutral-500 rounded w-full"
                   type="text"
-                  placeholder="Location"
+                  placeholder="Location (e.g. Paris)"
                   onChange={(e) => setLocation(e.target.value)}
                 />
 
@@ -147,7 +147,7 @@ export default function AddTripPreferenceTrigger({
                 <input
                   className="p-2 border border-neutral-500 rounded w-full"
                   type="text"
-                  placeholder="Location (optional)"
+                  placeholder="Location"
                   onChange={(e) => setLocation(e.target.value)}
                 />
 
@@ -162,11 +162,11 @@ export default function AddTripPreferenceTrigger({
                   className="p-2 border border-neutral-500 rounded"
                   onChange={(e) => setCurrency(e.target.value)}
                 >
-                  <option value="USD">USD ($)</option>
-                  <option value="EUR">EUR (€)</option>
-                  <option value="GBP">GBP (£)</option>
-                  <option value="JPY">JPY (¥)</option>
-                  <option value="NGN">NGN (₦)</option>
+                  {Object.entries(currencyMap).map(([key, value]) => (
+                    <option value={key} key={key}>
+                      {value} ({key})
+                    </option>
+                  ))}
                 </select>
 
                 <input

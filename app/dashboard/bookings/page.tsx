@@ -18,6 +18,8 @@ import { Link } from "next-view-transitions";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
+import { AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 const Bookings = () => {
   const { user, supabase } = useClerkSupabaseClient();
@@ -62,67 +64,82 @@ const Bookings = () => {
         <p className="text-neutral-500 text-lg">Check out your booked trips.</p>
       </div>
 
-      {fetchingBookings ? (
-        <div>
-          <p className="text-xl md:text-2xl flex items-center">
-            <Icons.spinner className="mr-2 animate-spin" /> Fetching Bookings
-          </p>
-        </div>
-      ) : bookings.length === 0 ? (
-        <div>
-          <p className="text-2xl">No bookings found.</p>
-        </div>
-      ) : (
-        <div className="border rounded-lg p-4">
-          <Table>
-            <TableCaption>A list of your recent bookings.</TableCaption>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-12 text-center text-xl">S/N</TableHead>
-                <TableHead className="text-xl">Title</TableHead>
-                <TableHead className="text-xl">Status</TableHead>
-                <TableHead className="text-right text-xl">Budget</TableHead>
-                <TableHead className="text-right text-xl">Booked on</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {bookings.map((booking, index) => {
-                const bookingData = booking.booking_data as any;
+      <AnimatePresence>
+        {fetchingBookings ? (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <p className="text-xl md:text-2xl flex items-center">
+              <Icons.spinner className="mr-2 animate-spin" /> Fetching Bookings
+            </p>
+          </motion.div>
+        ) : bookings.length === 0 ? (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            <p className="text-2xl">No bookings found.</p>
+          </motion.div>
+        ) : (
+          <div className="border rounded-lg p-4">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-12 text-center text-xl">
+                    S/N
+                  </TableHead>
+                  <TableHead className="text-xl">Title</TableHead>
+                  <TableHead className="text-xl">Status</TableHead>
+                  <TableHead className="text-right text-xl">Budget</TableHead>
+                  <TableHead className="text-right text-xl">
+                    Booked on
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {bookings.map((booking, index) => {
+                  const bookingData = booking.booking_data as any;
 
-                return (
-                  <TableRow key={booking.id}>
-                    <TableCell className="font-extralight text-center text-xl">
-                      {index + 1}
-                    </TableCell>
-                    <TableCell className="text-xl flex gap-4 items-center">
-                      <Badge>{slugToTitleCase(bookingData?.mood)}</Badge>
-                      {bookingData?.title}
-                    </TableCell>
-                    <TableCell
-                      className={`text-xl font-extralight first-letter:uppercase ${
-                        booking.status === "booked"
-                          ? "text-emerald-600"
-                          : "text-amber-400"
-                      }`}
-                    >
-                      {booking.status}
-                    </TableCell>
-                    <TableCell className="text-right font-extralight text-xl">
-                      {bookingData?.budget.currency +
-                        bookingData.budget.total.toLocaleString()}
-                    </TableCell>
-                    <TableCell className="text-right font-extralight text-xl">
-                      {booking?.created_at
-                        ? new Date(booking.created_at).toDateString()
-                        : "N/A"}
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </div>
-      )}
+                  return (
+                    <TableRow key={booking.id}>
+                      <TableCell className="font-extralight text-center text-lg">
+                        {index + 1}
+                      </TableCell>
+                      <TableCell className="text-lg flex gap-4 items-center">
+                        <Badge>{slugToTitleCase(bookingData?.mood)}</Badge>
+                        {bookingData?.title}
+                      </TableCell>
+                      <TableCell
+                        className={`text-lg font-extralight first-letter:uppercase ${
+                          booking.status === "booked"
+                            ? "text-emerald-600"
+                            : "text-amber-400"
+                        }`}
+                      >
+                        {booking.status}
+                      </TableCell>
+                      <TableCell className="text-right font-extralight text-lg">
+                        {bookingData?.budget.currency +
+                          bookingData.budget.total.toLocaleString()}
+                      </TableCell>
+                      <TableCell className="text-right font-extralight text-lg">
+                        {booking?.created_at
+                          ? new Date(booking.created_at).toDateString()
+                          : "N/A"}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+              <TableCaption>A list of your recent bookings.</TableCaption>
+            </Table>
+          </div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };

@@ -244,7 +244,7 @@ export default function Home() {
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between mb-4">
                       <Badge className="bg-indigo-600/20 text-indigo-400 border-indigo-600/30">
-                        Unwind & Restore
+                        Relax and Recharge
                       </Badge>
                       <div className="flex items-center space-x-1">
                         {[...Array(5)].map((_, i) => (

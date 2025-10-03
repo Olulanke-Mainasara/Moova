@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { Icons } from "@/components/icons";
 import { toast } from "sonner";
@@ -10,6 +10,8 @@ import { useClerkSupabaseClient } from "@/lib/clerkSupabaseClient";
 import { convertRawDateToReadableDate } from "@/lib/utils";
 import { useTransitionRouter } from "next-view-transitions";
 import { Trip } from "@/types/Trip";
+import { ArrowDown } from "lucide-react";
+import BookTripTrigger from "@/components/Custom/Buttons/BookTripTrigger";
 
 type TripFullDetails = {
   destination?: {
@@ -95,27 +97,43 @@ export default function TripDetails() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        <p className="text-2xl flex items-center">
-          <Icons.spinner className="mr-2 animate-spin" />
-          Fetching trip details
-        </p>
-      </div>
+      <AnimatePresence>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.4 }}
+          className="flex items-center justify-center h-screen"
+        >
+          <p className="text-2xl flex items-center">
+            <Icons.spinner className="mr-2 animate-spin" />
+            Fetching trip details
+          </p>
+        </motion.div>
+      </AnimatePresence>
     );
   }
 
   if (!tripDetails) {
     return (
-      <div className="w-full flex flex-col items-center justify-center gap-4 p-4 relative h-screen">
-        <p className="text-2xl">Failed to fetch trip details. Try again?</p>
-        <Button
-          onClick={() => router.refresh()}
-          disabled={isLoading}
-          className="text-lg"
+      <AnimatePresence>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.4 }}
+          className="w-full flex flex-col items-center justify-center gap-4 p-4 relative h-screen"
         >
-          Re-fetch Trip
-        </Button>
-      </div>
+          <p className="text-2xl">Failed to fetch trip details. Try again?</p>
+          <Button
+            onClick={() => router.refresh()}
+            disabled={isLoading}
+            className="text-lg"
+          >
+            Re-fetch Trip
+          </Button>
+        </motion.div>
+      </AnimatePresence>
     );
   }
 
@@ -229,14 +247,22 @@ export default function TripDetails() {
   return (
     <div className="min-h-screen pt-20 pb-4 px-4 max-w-4xl mx-auto flex items-center">
       {isBooking && (
-        <div className="absolute inset-0 bg-black/90 z-50 flex items-center justify-center">
-          <div className="p-6 rounded-lg shadow-lg text-center">
-            <p className="flex items-center text-2xl text-white">
-              <Icons.spinner className="animate-spin mr-2" />
-              Processing your booking
-            </p>
-          </div>
-        </div>
+        <AnimatePresence>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+            className="absolute inset-0 bg-black/90 z-50 flex items-center justify-center"
+          >
+            <div className="p-6 rounded-lg shadow-lg text-center">
+              <p className="flex items-center text-2xl text-white">
+                <Icons.spinner className="animate-spin mr-2" />
+                Processing your booking
+              </p>
+            </div>
+          </motion.div>
+        </AnimatePresence>
       )}
 
       <motion.div
@@ -306,12 +332,7 @@ export default function TripDetails() {
                   </p>
                   <p className="text-neutral-500">Total Estimated Budget</p>
                 </div>
-                <Button
-                  onClick={bookTrip}
-                  className="bg-indigo-600 hover:bg-indigo-700 text-white border-0 px-8 py-4 text-lg shadow-lg transition-colors duration-300"
-                >
-                  Book Trip
-                </Button>
+                <BookTripTrigger bookTrip={bookTrip} />
               </div>
 
               {/* Budget Breakdown */}
@@ -344,7 +365,7 @@ export default function TripDetails() {
               <Button
                 variant="outline"
                 onClick={() => setShowItinerary(!showItinerary)}
-                className="w-full text-lg md:text-base"
+                className="w-full"
               >
                 {showItinerary ? "Hide Itinerary" : "View Itinerary"}
               </Button>
@@ -418,15 +439,25 @@ export default function TripDetails() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
               {/* Extras */}
-              <div className="bg-white rounded-xl p-4 md:col-span-2">
-                <p className="font-bold text-black mb-2 text-xl">Extras</p>
-                <ul className="list-disc list-inside text-sm text-slate-700 space-y-1">
+              <div
+                className={`bg-white dark:bg-slate-100 rounded-xl p-4 md:col-span-2 relative md:h-[200px] overflow-auto`}
+              >
+                <p className="font-bold text-black mb-2 text-xl flex justify-between items-center">
+                  Extras{" "}
+                  <span className="text-sm text-neutral-500 flex items-center gap-2">
+                    scroll <ArrowDown className="w-4 h-4 text-indigo-600" />
+                  </span>
+                </p>
+                <div className="text-slate-700 space-y-2">
                   {(
                     tripDetails.full_details as TripFullDetails
                   )?.extras?.culturalInsights?.map((insight, idx) => (
-                    <li key={idx}>{insight}</li>
+                    <div className="flex gap-2" key={idx}>
+                      <span className="text-indigo-600 font-bold">&bull;</span>
+                      <p className="text-black">{insight}</p>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </div>
 
               <div className="flex flex-col">
@@ -447,11 +478,7 @@ export default function TripDetails() {
                 )}
 
                 {savedTrip && (
-                  <Button
-                    variant="destructive"
-                    onClick={removeTrip}
-                    className="text-lg md:text-base"
-                  >
+                  <Button variant="destructive" onClick={removeTrip}>
                     {isRemoving ? (
                       <span className="flex items-center">
                         <Icons.spinner className="mr-2 animate-spin" />
@@ -464,7 +491,7 @@ export default function TripDetails() {
                 )}
 
                 {!savedTrip && (
-                  <Button onClick={saveTrip} className="text-lg md:text-base">
+                  <Button onClick={saveTrip}>
                     {isSaving ? (
                       <span className="flex items-center">
                         <Icons.spinner className="mr-2 animate-spin" />

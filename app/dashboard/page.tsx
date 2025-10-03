@@ -91,26 +91,39 @@ const Dashboard = () => {
           <span className="text-indigo-600">?</span>
         </p>
 
-        {moods.length === 0 ? (
-          <p className="text-lg flex items-center justify-center gap-2">
-            <Icons.spinner className="animate-spin" />
-            Loading moods
-          </p>
-        ) : (
-          <div className="grid grid-cols-2 gap-3 max-w-4xl mx-auto md:flex md:flex-wrap justify-center px-4">
-            {moods.map((mood) => (
-              <Link
-                key={mood.slug}
-                href={`/dashboard/moods/${mood.slug}`}
-                prefetch={false}
-                className="border py-3 px-4 text-xl md:text-base rounded-lg text-center items-center flex flex-col md:flex-row md:rounded-full justify-center gap-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
-              >
-                <span className="text-3xl md:text-xl">{mood.icon}</span>
-                {mood.title}
-              </Link>
-            ))}
-          </div>
-        )}
+        <AnimatePresence>
+          {moods.length === 0 ? (
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="text-lg flex items-center justify-center gap-2"
+            >
+              <Icons.spinner className="animate-spin" />
+              Loading moods
+            </motion.p>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
+              className="grid grid-cols-2 gap-3 max-w-4xl mx-auto md:flex md:flex-wrap justify-center px-4"
+            >
+              {moods.map((mood) => (
+                <Link
+                  key={mood.slug}
+                  href={`/dashboard/moods/${mood.slug}`}
+                  prefetch={false}
+                  className="border py-3 px-4 text-xl md:text-base rounded-lg text-center items-center flex flex-col md:flex-row md:rounded-full justify-center gap-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+                >
+                  <span className="text-3xl md:text-xl">{mood.icon}</span>
+                  {mood.title}
+                </Link>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </section>
     </div>
   );
