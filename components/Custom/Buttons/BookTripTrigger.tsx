@@ -58,9 +58,9 @@ const BookTripTrigger = ({ bookTrip }: { bookTrip: () => void }) => {
                 Book Trip
               </Button>
               <DrawerClose>
-                <Button className="px-8 py-4 transition-colors duration-300 w-full">
+                <div className="py-2 rounded-lg bg-black text-white dark:bg-white dark:text-black transition-colors duration-300">
                   Cancel
-                </Button>
+                </div>
               </DrawerClose>
             </DrawerFooter>
           </DrawerContent>
